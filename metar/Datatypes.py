@@ -480,7 +480,7 @@ class position(object):
         long1 = self.longitude
         lat2 = position2.latitude
         long2 = position2.longitude
-        a = (sin(0.5(lat2 - lat1))) ** 2 + cos(lat1) * cos(lat2) * (sin(
+        a = (sin(0.5*(lat2 - lat1))) ** 2 + cos(lat1) * cos(lat2) * (sin(
             0.5 * (long2 - long1)) ** 2
         )
         c = 2.0 * atan(sqrt(a) * sqrt(1.0 - a))
