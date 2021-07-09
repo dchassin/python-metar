@@ -1146,6 +1146,31 @@ class Metar(object):
         lines.append("METAR: " + self.code)
         return "\n".join(lines)
 
+    def to_dict(self, units = {}):
+        default_units = dict(
+            temperature = "C",
+            speed = "KT",
+            distance = "M",
+            pressure = "mb",
+            )
+        for unit, value in units.keys():
+            if unit not in default_units.keys():
+                raise Exception(f"unit '{unit}={value}' is not valid")
+            default_units[unit] = value
+        return dict(
+            station = dict(value=self.station_id),
+            type = dict(report=self.type,cycle=self.cycle,mod=self.mod,correction=self.correction),
+            time = self.time.isoformat(sep=' ')+" UTC",
+            temperature = dict(value=self.temp.value(default_units["temperature"]),unit=default_units["temperature"]),
+            dew_point = dict(value=self.dewpt.value(default_units["temperature"]),unit=default_units["temperature"]),
+            wind_speed = dict(value=self.wind_speed.value(default_units["speed"]),unit=default_units["speed"]),
+            visibility = dict(value=self.vis.value(default_units["distance"]),unit=default_units["distance"]),
+            pressure = dict(value=self.press.value(default_units["pressure"]),unit=default_units["pressure"]),
+            weather = dict(value=self.present_weather()),
+            clouds = dict(value=self.sky_conditions(", ")),
+            ice = dict(value=self.ice_accretion_6hr),
+            )
+
     def report_type(self):
         """
         Return a textual description of the report type.
