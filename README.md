@@ -144,3 +144,32 @@ environments. To run tests against all environments, install tox and run:
 To run against a specific environment, use the `-e` flag:
 
     >>> tox -e py35
+
+Realtime Querying
+-------------------------------------------------------------------------
+
+To obtain realtime data using the latest aviation weather observations use the
+`ucar_weather.py` module.  For example
+
+```
+import ucar_weather
+print(ucar_weather.get("KSFO"))
+```
+
+obtains the current weather for SFO airport, e.g., 
+
+```
+{   'clouds': {'value': 'a few clouds at 20000 feet'},
+    'dew_point': {'unit': 'C', 'value': 11.7},
+    'ice': {'value': None},
+    'pressure': {'unit': 'mb', 'value': 1012.5330019999999},
+    'station': {'value': 'KSFO'},
+    'temperature': {'unit': 'C', 'value': 23.3},
+    'time': '2021-07-09 20:56:00 UTC',
+    'type': {'correction': None, 'cycle': 21, 'mod': 'AUTO', 'report': 'METAR'},
+    'visibility': {'unit': 'M', 'value': 16093.44},
+    'weather': {'value': ''},
+    'wind_speed': {'unit': 'KT', 'value': 18.0}
+}
+```
+
