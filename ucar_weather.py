@@ -1,7 +1,6 @@
 import requests
 import re
 from metar import Metar
-import pandas
 
 debug = False
 
@@ -91,7 +90,7 @@ def stations():
 						station = station,
 						latitude = lat,
 						longitude = lon,
-						linenum = linenum,
+						# linenum = linenum,
 						elevation = elev,
 					)
 
