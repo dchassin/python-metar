@@ -60,14 +60,14 @@ def stations():
 				section = line
 			elif line[3] != ' ':
 				try:
-					region = line[0:2]
-					if region == '  ':
+					region = line[0:2].strip()
+					if not region:
 						region = None
-					station = line[3:19]
-					icao = line[20:25]
-					if icao[0] == ' ' or icao[3] == ' ':
+					station = line[3:19].strip()
+					icao = line[20:24].strip()
+					if not icao:
 						continue
-					iata = line[26:29]
+					iata = line[26:29].strip()
 					try:
 						synop = int(line[32:37])
 					except:
@@ -79,7 +79,7 @@ def stations():
 					if line[53] == 'W': lon = -lon
 					elif line[53] != 'E': raise Exception(f"longitude invalid")
 					elev = float(line[55:59])
-					country = line[80:83]
+					country = line[80:83].strip()
 				except Exception as err:
 					print(f"stations.txt({linenum}): '{line}': {err}")
 					raise
