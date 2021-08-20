@@ -1152,6 +1152,7 @@ class Metar(object):
             speed = "KT",
             distance = "M",
             pressure = "mb",
+            heading = "deg",
             )
         for unit, value in units.keys():
             if unit not in default_units.keys():
@@ -1164,6 +1165,7 @@ class Metar(object):
             temperature = dict(value=self.temp.value(default_units["temperature"]),unit=default_units["temperature"]),
             dew_point = dict(value=self.dewpt.value(default_units["temperature"]),unit=default_units["temperature"]),
             wind_speed = dict(value=self.wind_speed.value(default_units["speed"]),unit=default_units["speed"]),
+            wind_dir = dict(value=self.wind_dir.value(),unit=default_units["heading"]),
             visibility = dict(value=self.vis.value(default_units["distance"]),unit=default_units["distance"]),
             pressure = dict(value=self.press.value(default_units["pressure"]),unit=default_units["pressure"]),
             weather = dict(value=self.present_weather()),

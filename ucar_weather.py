@@ -22,20 +22,22 @@ def get(station):
 			raise Exception(f"request error (code={r.status_code}), query='{query}'")
 		else:
 			raise Exception("request error (code={r.status_code})")
-	match = re.search(f"{station} (.*)<",r.text)
+	match = re.search(f"{station} (.[^<]*)",r.text)
 	if not match:
 		if debug:
-			raise Exception(f"request error (no match), query='{query}', response='{r.text}'")
+			raise Exception(f"request error (no match for station '{station}'), query='{query}', response='{r.text}'")
 		else:
 			raise Exception("request error (no match)")
-	obs = Metar.Metar(f'METAR {match.group(0)[:-1]}')
+	data = match.group(0)[:-1]
+	obs = Metar.Metar(f'METAR {data}')
 	if not obs:
 		if debug:
 			raise Exception("request error (no observation)")
 		else:
 			raise Exception(r"request error (no observation),, query='{query}',' response='{r.text}'")
-
-	return obs.to_dict()
+	result = obs.to_dict()
+	result["metar"] = data
+	return result
 
 def stations():
 	"""Get list of stations
